@@ -10,6 +10,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileMessageController;
+use App\Http\Controllers\PrivateMessageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,6 +77,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/profile/{id}/message', [ProfileMessageController::class, 'store'])->name('profile.message.store');
     Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/messages', [PrivateMessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages/send', [PrivateMessageController::class, 'send'])->name('messages.send');
 });
 
 require __DIR__.'/auth.php';
