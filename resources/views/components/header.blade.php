@@ -4,9 +4,9 @@
 
 <header class="flex items-center bg-white shadow-md p-4 justify-between">
     <x-home-button />
-    <h1 class="text-2xl font-bold text-gray-800">BackendWeb - Project</h1>
-    <a href="{{ route('contact.show') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</a>
+    <h1 class="text-2xl font-bold text-gray-800 -mr-52">BackendWeb - Project</h1>
     <div>
+        <a href="{{ route('contact.show') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">Contact</a>
         @auth
         @if (auth()->user()->isAdmin)
             <a href="{{ route('admin.users.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4">
@@ -20,7 +20,7 @@
 
         <form method="POST" action="{{ route('logout') }}" class="inline-block">
             @csrf
-            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-4">
+            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                 Logout
             </button>
         </form>

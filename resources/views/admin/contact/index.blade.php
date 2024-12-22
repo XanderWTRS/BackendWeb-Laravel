@@ -1,24 +1,8 @@
-<head>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@extends('layouts.admin')
 
-<div class="flex justify-between items-center bg-white shadow-md p-4">
-    <x-home-button />
-    <a href="{{ route('admin.users.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
-        Create User
-    </a>
-    <a href="{{ route('admin.faq.index') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
-        Manage FAQ
-    </a>
-    <a href="{{ route('admin.contact.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
-        View Contact Messages
-    </a>
-    <a href="{{ route('admin.users.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        Dashboard
-    </a>
-</div>
+@section('title', 'Contact Messages')
 
-<main>
+@section('content')
     <div class="container mx-auto mt-10">
         <h1 class="text-2xl font-bold mb-5">Contact Messages</h1>
 
@@ -68,4 +52,4 @@
             </tbody>
         </table>
     </div>
-</main>
+@endsection
