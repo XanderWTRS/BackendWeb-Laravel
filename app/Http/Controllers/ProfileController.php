@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\ProfileMessage;
 
 class ProfileController extends Controller
 {
@@ -58,6 +59,14 @@ class ProfileController extends Controller
     public function show($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        return view('profile.show', compact('user'));
+
+        // Gebruik $user->id om de profielberichten op te halen
+        $profileMessages = ProfileMessage::where('to_user_id', $user->id)
+            ->with('fromUser')
+            ->latest()
+            ->get();
+
+        return view('profile.show', compact('user', 'profileMessages'));
     }
+
 }

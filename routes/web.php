@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileMessageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,6 +71,11 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/news/{id}/like', [NewsItemController::class, 'like'])->name('news.like');
     Route::post('/news/{id}/comment', [NewsItemController::class, 'comment'])->name('news.comment');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/profile/{id}/message', [ProfileMessageController::class, 'store'])->name('profile.message.store');
+    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 });
 
 require __DIR__.'/auth.php';

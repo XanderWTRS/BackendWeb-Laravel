@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ContactMessageSeeder::class,
             CommentSeeder::class,
             LikeSeeder::class,
+            ProfileMessageSeeder::class,
         ]);
     }
 }
