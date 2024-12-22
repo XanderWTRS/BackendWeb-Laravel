@@ -35,6 +35,27 @@ class FAQController extends Controller
         return redirect()->route('admin.faq.index')->with('success', 'FAQ item created successfully.');
     }
 
+    public function updateCategory(Request $request, $id)
+    {
+        $request->validate(['name' => 'required|string|max:255']);
+        $category = Category::findOrFail($id);
+        $category->update(['name' => $request->name]);
+
+        return redirect()->route('admin.faq.index')->with('success', 'Category updated successfully.');
+    }
+
+    public function updateFAQ(Request $request, $id)
+    {
+        $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string',
+        ]);
+        $faqItem = FAQItem::findOrFail($id);
+        $faqItem->update($request->only(['question', 'answer']));
+
+        return redirect()->route('admin.faq.index')->with('success', 'FAQ updated successfully.');
+    }
+
     public function destroyCategory($id)
     {
         $category = Category::findOrFail($id);

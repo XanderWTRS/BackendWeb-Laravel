@@ -53,6 +53,8 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::post('/admin/faq/store-faq', [FAQController::class, 'storeFAQ'])->name('admin.faq.storeFAQ');
     Route::delete('/admin/faq/category/{id}', [FAQController::class, 'destroyCategory'])->name('admin.faq.destroyCategory');
     Route::delete('/admin/faq/item/{id}', [FAQController::class, 'destroyFAQ'])->name('admin.faq.destroyFAQ');
+    Route::put('/admin/faq/category/{id}', [FAQController::class, 'updateCategory'])->name('admin.faq.updateCategory');
+    Route::put('/admin/faq/item/{id}', [FAQController::class, 'updateFAQ'])->name('admin.faq.updateFAQ');
 });
 
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
