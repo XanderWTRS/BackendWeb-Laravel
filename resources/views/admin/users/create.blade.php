@@ -1,3 +1,14 @@
+<head>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<div class="flex justify-between items-center bg-white shadow-md p-4">
+    <x-home-button />
+    <a href="{{ route('admin.users.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        Dashboard
+    </a>
+</div>
+
 <div class="container mx-auto mt-10">
     <h1 class="text-2xl font-bold mb-5">Create New User</h1>
 

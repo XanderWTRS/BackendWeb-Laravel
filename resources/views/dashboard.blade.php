@@ -14,4 +14,5 @@
             </div>
         </div>
     </div>
+    <x-home-button />
 </x-app-layout>
