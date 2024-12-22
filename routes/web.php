@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\NewsItemController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,5 +36,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-dashboard', [UserDashboardController::class, 'edit'])->name('user.dashboard');
     Route::post('/user-dashboard', [UserDashboardController::class, 'update'])->name('user.dashboard.update');
 });
+
+Route::get('/', [NewsItemController::class, 'index'])->name('welcome');
+
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/news/create', [NewsItemController::class, 'create'])->name('news.create');
+    Route::post('/news', [NewsItemController::class, 'store'])->name('news.store');
+    Route::get('/news/{id}/edit', [NewsItemController::class, 'edit'])->name('news.edit');
+    Route::put('/news/{id}', [NewsItemController::class, 'update'])->name('news.update');
+    Route::delete('/news/{id}', [NewsItemController::class, 'destroy'])->name('news.destroy');
+});
+
+Route::get('/news/{id}', [NewsItemController::class, 'show'])->name('news.show');
 
 require __DIR__.'/auth.php';
