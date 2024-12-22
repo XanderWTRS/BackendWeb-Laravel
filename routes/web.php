@@ -8,6 +8,7 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,6 +57,16 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::post('/admin/faq/store-faq', [FAQController::class, 'storeFAQ'])->name('admin.faq.storeFAQ');
     Route::delete('/admin/faq/category/{id}', [FAQController::class, 'destroyCategory'])->name('admin.faq.destroyCategory');
     Route::delete('/admin/faq/item/{id}', [FAQController::class, 'destroyFAQ'])->name('admin.faq.destroyFAQ');
+});
+
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+
+
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/admin/contact', [ContactController::class, 'adminIndex'])->name('admin.contact.index');
+    Route::post('/admin/contact/reply/{id}', [ContactController::class, 'replyToMessage'])->name('admin.contact.reply');
+    Route::delete('/admin/contact/{id}', [ContactController::class, 'destroy'])->name('admin.contact.destroy');
 });
 
 require __DIR__.'/auth.php';

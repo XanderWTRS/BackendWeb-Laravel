@@ -5,6 +5,7 @@
 <header class="flex items-center bg-white shadow-md p-4 justify-between">
     <x-home-button />
     <h1 class="text-2xl font-bold text-gray-800">BackendWeb - Project</h1>
+    <a href="{{ route('contact.show') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</a>
     <div>
         @auth
         @if (auth()->user()->isAdmin)

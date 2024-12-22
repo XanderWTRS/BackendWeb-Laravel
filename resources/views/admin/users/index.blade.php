@@ -19,6 +19,9 @@
     <a href="{{ route('admin.faq.index') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
         Manage FAQ
     </a>
+    <a href="{{ route('admin.contact.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
+        View Contact Messages
+    </a>
 </div>
 
 <div class="container mx-auto mt-10">
