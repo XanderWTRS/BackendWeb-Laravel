@@ -32,7 +32,7 @@
         <div class="mb-4">
             <label for="profielfoto" class="block text-gray-700 font-bold mb-2">Profile Photo</label>
             @if ($user->profielfoto)
-                <img src="{{ asset('storage/' . $user->profielfoto) }}" alt="Profile Picture" class="w-32 h-32 rounded-full mb-2">
+                <img src="{{ asset('/' . $user->profielfoto) }}" alt="Profile Picture" class="w-32 h-32 rounded-full mb-2">
             @endif
             <input type="file" id="profielfoto" name="profielfoto" class="border border-gray-300 rounded w-full p-2">
         </div>
