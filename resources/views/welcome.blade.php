@@ -20,37 +20,36 @@
         @endif
     </head>
     <body>
-        <header class="flex items-center bg-white shadow-md p-4 justify-between">
-            <x-home-button />
-            <div>
-                @auth
-                @if (auth()->user()->isAdmin)
-                    <a href="{{ route('admin.users.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4">
-                        Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('dashboard') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4">
-                        Profiel
-                    </a>
-                @endif
+        <x-header />
 
-                <form method="POST" action="{{ route('logout') }}" class="inline-block">
-                    @csrf
-                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-4">
-                        Logout
-                    </button>
-                </form>
-            @else
-                <a href="{{ route('login') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4">
-                    Login
-                </a>
-                <a href="{{ route('register') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-4">
-                    Register
-                </a>
-            @endauth
+        <main class="container mx-auto mt-10 w-[vw-70]">
+            <div class="search-bar mt-5">
+                <label for="user-search" class="block text-gray-700 font-bold mb-2">Search Users</label>
+                <input type="text" id="user-search" class="border border-gray-300 rounded w-full p-2" placeholder="Search by username...">
+                <ul id="search-results" class="mt-2 border border-gray-300 rounded bg-white"></ul>
             </div>
-        </header>
-        <h1 class="text-2xl font-bold mb-5">Welcome to the Application</h1>
+        </main>
 
     </body>
+
+    <script>
+        document.getElementById('user-search').addEventListener('input', async function (e) {
+            const query = e.target.value;
+            if (query.length > 0) {
+                const response = await fetch(`/search-users?query=${query}`);
+                const users = await response.json();
+
+                const results = document.getElementById('search-results');
+                results.innerHTML = '';
+
+                users.forEach(user => {
+                    const li = document.createElement('li');
+                    li.classList.add('p-2', 'hover:bg-gray-100');
+                    li.innerHTML = `<a href="/profile/${user.username}" class="text-blue-500">${user.username}</a>`;
+                    results.appendChild(li);
+                });
+            }
+        });
+    </script>
+
 </html>
