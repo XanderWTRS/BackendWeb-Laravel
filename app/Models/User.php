@@ -48,4 +48,14 @@ class User extends Authenticatable
         'password' => 'hashed',
         'isAdmin' => 'boolean',
     ];
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

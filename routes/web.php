@@ -67,4 +67,9 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::delete('/admin/contact/{id}', [ContactController::class, 'destroy'])->name('admin.contact.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::post('/news/{id}/like', [NewsItemController::class, 'like'])->name('news.like');
+    Route::post('/news/{id}/comment', [NewsItemController::class, 'comment'])->name('news.comment');
+});
+
 require __DIR__.'/auth.php';

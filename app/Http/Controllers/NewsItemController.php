@@ -87,4 +87,31 @@ class NewsItemController extends Controller
 
         return redirect()->route('welcome')->with('success', 'News item deleted successfully.');
     }
+
+    public function like($id)
+    {
+        $newsItem = NewsItem::findOrFail($id);
+
+        if ($newsItem->likes()->where('user_id', auth()->id())->exists()) {
+            return back()->with('error', 'You have already liked this news item.');
+        }
+
+        $newsItem->likes()->create(['user_id' => auth()->id()]);
+
+        return back()->with('success', 'News item liked.');
+    }
+
+    public function comment(Request $request, $id)
+    {
+        $request->validate(['content' => 'required|string']);
+
+        $newsItem = NewsItem::findOrFail($id);
+
+        $newsItem->comments()->create([
+            'user_id' => auth()->id(),
+            'content' => $request->content,
+        ]);
+
+        return back()->with('success', 'Comment added.');
+    }
 }
