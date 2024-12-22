@@ -16,6 +16,9 @@
     <a href="{{ route('admin.users.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
         Create User
     </a>
+    <a href="{{ route('admin.faq.index') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded my-4 m-10">
+        Manage FAQ
+    </a>
 </div>
 
 <div class="container mx-auto mt-10">

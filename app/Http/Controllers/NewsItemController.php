@@ -8,27 +8,17 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsItemController extends Controller
 {
-    // For displaying all news items on the welcome page
-    public function index()
-    {
-        $newsItems = NewsItem::orderBy('publication_date', 'desc')->get();
-        return view('welcome', compact('newsItems'));
-    }
-
-    // For showing a specific news item (if needed in a dedicated page)
     public function show($id)
     {
         $newsItem = NewsItem::findOrFail($id);
         return view('news.show', compact('newsItem'));
     }
 
-    // Admin: Create a new news item
     public function create()
     {
         return view('news.create');
     }
 
-    // Admin: Store a new news item
     public function store(Request $request)
     {
         $request->validate([
@@ -53,14 +43,12 @@ class NewsItemController extends Controller
         return redirect()->route('welcome')->with('success', 'News item created successfully.');
     }
 
-    // Admin: Edit a news item
     public function edit($id)
     {
         $newsItem = NewsItem::findOrFail($id);
         return view('news.edit', compact('newsItem'));
     }
 
-    // Admin: Update an existing news item
     public function update(Request $request, $id)
     {
         $newsItem = NewsItem::findOrFail($id);
@@ -89,7 +77,6 @@ class NewsItemController extends Controller
         return redirect()->route('welcome')->with('success', 'News item updated successfully.');
     }
 
-    // Admin: Delete a news item
     public function destroy($id)
     {
         $newsItem = NewsItem::findOrFail($id);

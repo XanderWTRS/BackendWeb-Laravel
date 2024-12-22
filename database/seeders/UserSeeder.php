@@ -9,7 +9,7 @@ use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
-    public function run()
+    public function run()   //50 USERS
     {
         $faker = Faker::create();
 

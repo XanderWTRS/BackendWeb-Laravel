@@ -24,14 +24,14 @@
         <x-header />
 
         <main class="container mx-auto mt-10 w-[vw-70]">
-            <!--SEARCH BAR-->
+            <!-- SEARCH BAR -->
             <div class="search-bar mt-5">
                 <label for="user-search" class="block text-gray-700 font-bold mb-2">Search Users</label>
                 <input type="text" id="user-search" class="border border-gray-300 rounded w-full p-2" placeholder="Search by username...">
                 <ul id="search-results" class="mt-2 border border-gray-300 rounded bg-white"></ul>
             </div>
 
-            <!--NEWS-->
+            <!-- NEWS -->
             <div class="flex justify-between items-center my-5">
                 <h2 class="text-2xl font-bold">Latest News</h2>
                 @auth
@@ -67,7 +67,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                @endauth
+                                    @endauth
                                 </div>
                             </div>
                             <div x-show="open" x-transition class="mt-3">
@@ -80,6 +80,28 @@
                     @endforeach
                 </div>
             @endif
+
+            <!-- FAQ -->
+            <div class="faq-section mt-10">
+                <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
+                @if ($categories->isEmpty())
+                    <p>No FAQs available at the moment.</p>
+                @else
+                    @foreach ($categories as $category)
+                        <div class="faq-category mt-4">
+                            <h3 class="text-xl font-semibold">{{ $category->name }}</h3>
+                            <ul class="faq-items list-disc pl-5">
+                                @foreach ($category->faqItems as $faq)
+                                    <li class="faq-item mt-2">
+                                        <strong>{{ $faq->question }}</strong>
+                                        <p>{{ $faq->answer }}</p>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
         </main>
     </body>
 

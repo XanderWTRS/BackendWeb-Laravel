@@ -6,6 +6,8 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\NewsItemController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user-dashboard', [UserDashboardController::class, 'update'])->name('user.dashboard.update');
 });
 
-Route::get('/', [NewsItemController::class, 'index'])->name('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::get('/news/create', [NewsItemController::class, 'create'])->name('news.create');
@@ -46,7 +48,14 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::put('/news/{id}', [NewsItemController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsItemController::class, 'destroy'])->name('news.destroy');
 });
-
 Route::get('/news/{id}', [NewsItemController::class, 'show'])->name('news.show');
+
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/admin/faq', [FAQController::class, 'adminIndex'])->name('admin.faq.index');
+    Route::post('/admin/faq/store-category', [FAQController::class, 'storeCategory'])->name('admin.faq.storeCategory');
+    Route::post('/admin/faq/store-faq', [FAQController::class, 'storeFAQ'])->name('admin.faq.storeFAQ');
+    Route::delete('/admin/faq/category/{id}', [FAQController::class, 'destroyCategory'])->name('admin.faq.destroyCategory');
+    Route::delete('/admin/faq/item/{id}', [FAQController::class, 'destroyFAQ'])->name('admin.faq.destroyFAQ');
+});
 
 require __DIR__.'/auth.php';
