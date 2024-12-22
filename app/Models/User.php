@@ -25,6 +25,7 @@ class User extends Authenticatable
         'profielfoto',
         'bio',
         'password',
+        'isAdmin',
     ];
 
     /**
