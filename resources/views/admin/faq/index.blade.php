@@ -12,11 +12,46 @@
             </div>
         @endif
 
+        <h2 class="text-2xl font-bold mt-10">Gebruikersvragen</h2>
+        @if ($userQuestions->isEmpty())
+            <p>Er zijn geen ingediende vragen.</p>
+        @else
+            @foreach ($userQuestions as $question)
+                <div class="mb-8 bg-gray-100 p-5 rounded shadow-md">
+                    <p><strong>Vraag:</strong> {{ $question->question }}</p>
+                    <p><strong>Ingediend door:</strong> {{ $question->user->name ?? 'Onbekend' }}</p>
+
+                    <form method="POST" action="{{ route('admin.userQuestions.addToFAQ', $question->id) }}" class="mt-3">
+                        @csrf
+                        <div class="mb-4">
+                            <label for="category_id" class="block text-gray-700 font-bold mb-2">Categorie</label>
+                            <select id="category_id" name="category_id" class="border border-gray-300 rounded w-full p-2" required>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="answer" class="block text-gray-700 font-bold mb-2">Antwoord</label>
+                            <textarea id="answer" name="answer" rows="3" class="w-full border border-gray-300 rounded p-2" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Toevoegen aan FAQ</button>
+                    </form>
+
+                    <form method="POST" action="{{ route('admin.userQuestions.delete', $question->id) }}" class="mt-3">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded">Verwijderen</button>
+                    </form>
+                </div>
+            @endforeach
+        @endif
+
         <div>
             @foreach ($categories as $category)
                 <div class="mb-8 bg-gray-100 p-5 rounded shadow-md">
-                    <div class="flex justify-between items-center text-center">
-                        <h2 class="text-2xl font-bold mt-5">{{ $category->name }}</h2>
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">{{ $category->name }}</h2>
 
                         <button
                             type="button"
@@ -29,9 +64,7 @@
                         <form action="{{ route('admin.faq.destroyCategory', $category->id) }}" method="POST" class="inline-block ml-3">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                Delete Category
-                            </button>
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete Category</button>
                         </form>
                     </div>
 
@@ -95,24 +128,6 @@
         </form>
     </div>
 
-    <div id="edit-category-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="bg-white rounded shadow-md p-6 w-1/2">
-                <h2 class="text-xl font-bold mb-4">Edit Category</h2>
-                <form id="edit-category-form" method="POST" action="">
-                    @csrf
-                    @method('PUT')
-                    <div class="mb-4">
-                        <label for="edit-category-name" class="block text-gray-700">Category Name</label>
-                        <input type="text" id="edit-category-name" name="name" class="border border-gray-300 rounded w-full p-2" required>
-                    </div>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
-                    <button type="button" id="close-category-modal" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <div id="edit-faq-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen">
             <div class="bg-white rounded shadow-md p-6 w-1/2">
@@ -130,6 +145,24 @@
                     </div>
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
                     <button type="button" id="close-faq-modal" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-category-modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded shadow-md p-6 w-1/2">
+                <h2 class="text-xl font-bold mb-4">Edit Category</h2>
+                <form id="edit-category-form" method="POST" action="">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-4">
+                        <label for="edit-category-name" class="block text-gray-700">Category Name</label>
+                        <input type="text" id="edit-category-name" name="name" class="border border-gray-300 rounded w-full p-2" required>
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
+                    <button type="button" id="close-category-modal" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
                 </form>
             </div>
         </div>

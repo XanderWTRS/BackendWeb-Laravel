@@ -57,6 +57,11 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::delete('/admin/faq/item/{id}', [FAQController::class, 'destroyFAQ'])->name('admin.faq.destroyFAQ');
     Route::put('/admin/faq/category/{id}', [FAQController::class, 'updateCategory'])->name('admin.faq.updateCategory');
     Route::put('/admin/faq/item/{id}', [FAQController::class, 'updateFAQ'])->name('admin.faq.updateFAQ');
+    Route::post('/admin/user-questions/{id}/add-to-faq', [FAQController::class, 'addToFAQ'])->name('admin.userQuestions.addToFAQ');
+    Route::delete('/admin/user-questions/{id}', [FAQController::class, 'deleteUserQuestion'])->name('admin.userQuestions.delete');
+});
+Route::middleware('auth')->group(function () {
+    Route::post('/faq/submit-question', [FAQController::class, 'submitQuestion'])->name('faq.submitQuestion');
 });
 
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');

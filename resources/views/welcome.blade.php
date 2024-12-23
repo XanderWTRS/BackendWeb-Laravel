@@ -92,7 +92,7 @@
         @endif
 
         <!-- FAQ -->
-        <div class="faq-section mt-10">
+        <div class="faq-section mt-10 bg-gray-100 p-5 rounded shadow-md">
             <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
             @if ($categories->isEmpty())
                 <p>No FAQs available at the moment.</p>
@@ -112,5 +112,24 @@
                 @endforeach
             @endif
         </div>
+        <div class="mt-20 bg-gray-100 p-5 rounded shadow-md">
+            <h3 class="text-xl font-bold">Stel een vraag</h3>
+
+            @auth
+                <form method="POST" action="{{ route('faq.submitQuestion') }}">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="question" class="block text-gray-700">Vraag</label>
+                        <textarea id="question" name="question" rows="3" class="w-full border border-gray-300 rounded p-2" required></textarea>
+                    </div>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Verstuur</button>
+                </form>
+            @else
+                <p class="text-gray-700 mt-3">
+                    Je moet <a href="{{ route('login') }}" class="text-blue-500 hover:underline">inloggen</a> om een vraag te kunnen stellen.
+                </p>
+            @endauth
+        </div>
+
     </div>
 @endsection
