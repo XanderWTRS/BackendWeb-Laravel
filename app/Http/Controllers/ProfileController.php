@@ -52,9 +52,17 @@ class ProfileController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $users = User::where('username', 'like', "%$query%")->get(['username', 'id']);
+
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        $users = User::where('username', 'like', "%$query%")
+                     ->get(['id', 'username']);
+
         return response()->json($users);
     }
+
 
     public function show($username)
     {

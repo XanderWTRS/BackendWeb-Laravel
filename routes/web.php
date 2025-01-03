@@ -17,6 +17,8 @@ Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
 Route::get('/news/{id}', [NewsItemController::class, 'show'])->name('news.show');
+Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/search-users', [ProfileController::class, 'search'])->name('search.users');
 
 //LOGGED-IN USERS
 Route::middleware('auth')->group(function () {
@@ -24,7 +26,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/{id}/message', [ProfileMessageController::class, 'store'])->name('profile.message.store');
 
     //USER DASHBOARD
@@ -45,6 +46,9 @@ Route::middleware('auth')->group(function () {
 
 //ADMIN
 Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('/createPost', [NewsItemController::class, 'create'])->name('news.create'); //voor een of andere reden krijg ik altijd
+    //error 404 NOT FOUND als ik de route bij de news groep zet?
+
     //USER-MANAGEMENT
     Route::prefix('admin/users')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.users.index');
@@ -56,8 +60,8 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
 
     //NEWS-MANAGEMENT
     Route::prefix('news')->group(function () {
-        Route::get('/create', [NewsItemController::class, 'create'])->name('news.create');
         Route::post('/', [NewsItemController::class, 'store'])->name('news.store');
+        Route::get('{id}', [NewsItemController::class, 'show'])->name('news.show');
         Route::get('{id}/edit', [NewsItemController::class, 'edit'])->name('news.edit');
         Route::put('{id}', [NewsItemController::class, 'update'])->name('news.update');
         Route::delete('{id}', [NewsItemController::class, 'destroy'])->name('news.destroy');
