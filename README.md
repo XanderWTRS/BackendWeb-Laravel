@@ -57,14 +57,20 @@ Volg de onderstaande stappen om het project op je lokale omgeving op te zetten:
    php artisan key:generate
    ```
 
-5. **Stel de database in:**
+5. **Link de storage:**
+
+   ```bash
+   php artisan storage:link
+   ```
+
+6. **Stel de database in:**
 
    - Maak een MySQL-database lokaal aan (bijv. `backendweb_laravel`).
    - Update het `.env`-bestand met je databasegegevens:
 <img width="145" alt="image" src="https://github.com/user-attachments/assets/38149292-0eab-4572-bd31-9af0d30e6246" />
 
 
-6. **Configureer e-mailservice:**
+7. **Configureer e-mailservice:**
    Update `.env` met je e-mailservicegegevens voor meldingen van het contactformulier:
 
 <img width="587" alt="image" src="https://github.com/user-attachments/assets/16b3e0c5-d929-4169-9b32-747507ba64b6" />
